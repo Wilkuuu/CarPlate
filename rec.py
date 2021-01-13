@@ -1,5 +1,6 @@
 import cv2
 import imutils
+import time
 import numpy as np
 import pytesseract
 from picamera.array import PiRGBArray
@@ -13,7 +14,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     cv2.imshow("Frame", image)
     key = cv2.waitKey(1) & 0xFF
     rawCapture.truncate(0)
-    if key == ord("s"):
+    while True:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # convert to grey scale
         gray = cv2.bilateralFilter(gray, 11, 17, 17)  # Blur to reduce noise
         edged = cv2.Canny(gray, 30, 200)  # Perform Edge detection
@@ -46,5 +47,5 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         cv2.imshow("Frame", image)
         cv2.imshow('Cropped', Cropped)
         cv2.waitKey(0)
-        break
-cv2.destroyAllWindows()
+        time.sleep(4)
+# cv2.destroyAllWindows()
