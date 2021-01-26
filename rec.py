@@ -6,7 +6,7 @@ import pytesseract
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
-avalibleTable = 'CB 807KN CB 1070Y'
+avalibleTable = 'Moje:CB 807KN , Testowe: CB 1070Y'
 camera = PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 30
@@ -33,8 +33,8 @@ while True:
                     break
             if screenCnt is None:
                 detected = 0
-                print("No contour detected")
-                time.sleep(2)
+                print("Brak tablic")
+                time.sleep(1)
             else:
                 detected = 1
             if detected == 1:
@@ -48,13 +48,15 @@ while True:
                     (bottomx, bottomy) = (np.max(x), np.max(y))
                     Cropped = gray[topx:bottomx + 1, topy:bottomy + 1]
                     text = pytesseract.image_to_string(Cropped, config='--psm 11')
-                    print("Detected Number is:", text)
-                    if avalibleTable.find(text) > -1:
-                        print('znalazł')
-                        cv2.imshow("Frame", image)
-                        cv2.imshow('Cropped', Cropped)
-                        # cv2.waitKey(0)
+                    print("Detected Number is:", text, time.time())
+                    if avalibleTable.find(text[0:8]) > -1:
+                        print('****************')
+                        print('MAMY TO !!!')
+                        print('****************')
                     else:
                         print('nie znalazł')
-                    time.sleep(2)
+                    cv2.imshow("Frame", image)
+                    cv2.imshow('Cropped', Cropped)
+                    # cv2.waitKey(0)
+            time.sleep(1)
 # cv2.destroyAllWindows()
