@@ -33,7 +33,7 @@ while True:
             if screenCnt is None:
                 detected = 0
                 print("No contour detected")
-                time.sleep(4)
+                time.sleep(2)
             else:
                 detected = 1
             if detected == 1:
@@ -51,5 +51,5 @@ while True:
                     cv2.imshow("Frame", image)
                     cv2.imshow('Cropped', Cropped)
                     # cv2.waitKey(0)
-            time.sleep(4)
+            time.sleep(2)
 # cv2.destroyAllWindows()
