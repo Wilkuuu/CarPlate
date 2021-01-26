@@ -6,6 +6,7 @@ import pytesseract
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
+avalibleTable = 'CB 807KN CB 1070Y'
 camera = PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 30
@@ -48,8 +49,12 @@ while True:
                     Cropped = gray[topx:bottomx + 1, topy:bottomy + 1]
                     text = pytesseract.image_to_string(Cropped, config='--psm 11')
                     print("Detected Number is:", text)
-                    cv2.imshow("Frame", image)
-                    cv2.imshow('Cropped', Cropped)
-                    # cv2.waitKey(0)
-            time.sleep(2)
+                    if avalibleTable.find(text) > -1:
+                        print('znalazł')
+                        cv2.imshow("Frame", image)
+                        cv2.imshow('Cropped', Cropped)
+                        # cv2.waitKey(0)
+                    else:
+                        print('nie znalazł')
+                    time.sleep(2)
 # cv2.destroyAllWindows()
