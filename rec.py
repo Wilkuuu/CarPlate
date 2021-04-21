@@ -3,8 +3,13 @@ import imutils
 import time
 import numpy as np
 import pytesseract
+import subprocess
+import shlex
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+
+
+
 
 avalibleTable = 'Moje:CB 807KN , Testowe: CB 1070Y'
 camera = PiCamera()
@@ -34,7 +39,7 @@ while True:
             if screenCnt is None:
                 detected = 0
                 print("Brak tablic")
-                time.sleep(1)
+                #time.sleep(1)
             else:
                 detected = 1
             if detected == 1:
@@ -53,6 +58,9 @@ while True:
                         print('****************')
                         print('MAMY TO !!!')
                         print('****************')
+                        subprocess.call(shlex.split('/home/pi/Desktop/radio/power.sh 1'))
+                        time.sleep(10)
+                        subprocess.call(shlex.split('/home/pi/Desktop/radio/power.sh 0'))
                     else:
                         print('nie znalazł')
                     cv2.imshow("Frame", image)
